@@ -1,6 +1,6 @@
-import React, {FC} from 'react';
-import {Image, StyleSheet, View, ViewProps, Text} from 'react-native';
-import {formatDexNumber} from './utils/formatDexNumber';
+import React, { FC } from 'react';
+import { Image, StyleSheet, View, ViewProps, Text } from 'react-native';
+import { formatDexNumber } from './utils/formatDexNumber';
 
 interface IPokeTileProps extends ViewProps {
   pokedexNumber: number;
@@ -21,9 +21,9 @@ export const PokeTile: FC<IPokeTileProps> = ({
           uri: spriteUrl,
         }}
       />
-      <View style={styles.pokeText}>
-        <Text>{formatDexNumber(pokedexNumber)}</Text>
-        <Text>{pokemonName}</Text>
+      <View style={styles.textContainer}>
+        <Text style={styles.font}>{formatDexNumber(pokedexNumber)}</Text>
+        <Text style={styles.font}>{pokemonName}</Text>
       </View>
     </View>
   );
@@ -40,14 +40,16 @@ const styles = StyleSheet.create({
     width: 96,
     color: 'black',
   },
-  pokeText: {
+  textContainer: {
     alignItems: 'center',
     marginBottom: 6,
-    fontFamily: 'Exo',
-    fontWeight: 600,
+  },
+  font: {
+    fontFamily: 'Exo2-Regular',
+    fontWeight: '600',
   },
   pokeImage: {
-    width: 56,
-    height: 56,
+    width: 60,
+    height: 60,
   },
 });
