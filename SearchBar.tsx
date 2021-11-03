@@ -3,8 +3,15 @@ import {
   useAnswersState,
 } from '@yext/answers-headless-react';
 import React, { FC, useEffect, useState } from 'react';
-import { ViewProps, StyleSheet, Text, Pressable } from 'react-native';
-import Autocomplete from 'react-native-autocomplete-input';
+import {
+  ViewProps,
+  StyleSheet,
+  Text,
+  Pressable,
+  TextInput,
+  View,
+  FlatList,
+} from 'react-native';
 
 interface ISearchBar extends ViewProps {}
 
@@ -56,37 +63,44 @@ export const SearchBar: FC<ISearchBar> = () => {
   };
 
   return (
-    <Autocomplete
-      hideResults={hideResults}
-      data={autoCompleteResults}
-      inputContainerStyle={styles.searchBar}
-      listContainerStyle={styles.autocompleteOptions}
-      value={query}
-      onChangeText={text => onChangeText(text)}
-      flatListProps={{
-        keyExtractor: (_, idx) => idx,
-        renderItem: ({ item }) => renderAutoCompleteRow(item),
-      }}
-    />
+    <View style={styles.searchContainer}>
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Search Pokémon..."
+        onChangeText={onChangeText}
+        value={query}
+      />
+      {!hideResults && (
+        <FlatList
+          data={autoCompleteResults}
+          renderItem={item => renderAutoCompleteRow(item.item)}
+        />
+      )}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  searchBar: {
-    backgroundColor: '#F0F0F0',
-    marginHorizontal: 20,
-    borderRadius: 30,
-  },
-  autocompleteOptions: {
-    marginHorizontal: 20,
-  },
   font: {
     fontFamily: 'Exo2-Regular',
     fontWeight: '600',
   },
   rowTextContainer: {
+    marginHorizontal: 20,
     paddingVertical: 10,
     borderTopWidth: 1,
     borderTopColor: '#C0C0C0',
+  },
+  searchInput: {
+    backgroundColor: '#F0F0F0',
+    height: 40,
+    marginHorizontal: 18,
+    borderRadius: 10,
+    paddingLeft: 3,
+    fontFamily: 'Exo2-Regular',
+    fontWeight: '600',
+  },
+  searchContainer: {
+    zIndex: 1,
   },
 });
