@@ -7,10 +7,10 @@
  */
 
 import React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { ImageBackground, SafeAreaView, StyleSheet, View } from 'react-native';
 import { AnswersHeadlessProvider } from '@yext/answers-headless-react';
-import { SearchBar } from '../SearchBar';
-import { PokeSearchResults } from '../PokeSearchResults';
+import { SearchBar } from './SearchBar';
+import { PokeSearchResults } from './PokeSearchResults';
 
 // TODO:
 // red background with search bar and filter options at the top
@@ -41,20 +41,28 @@ const App = () => {
       locale="en"
       verticalKey="pokémon"
       endpoints={endpoints}>
-      <SafeAreaView style={styles.backgroundStyle}>
-        <View style={styles.backgroundStyle}>
-          <SearchBar />
-          <PokeSearchResults />
-        </View>
-      </SafeAreaView>
+      <ImageBackground
+        source={require('./assets/images/pokeBackground.png')}
+        style={styles.container}>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.container}>
+            <SearchBar />
+            <PokeSearchResults />
+          </View>
+        </SafeAreaView>
+      </ImageBackground>
     </AnswersHeadlessProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  backgroundStyle: {
-    backgroundColor: '#e4000f',
+  container: {
+    // backgroundColor: '#e4000f',
     flex: 1,
+  },
+  backgroundImage: {
+    height: '100%',
+    width: '100%',
   },
 });
 

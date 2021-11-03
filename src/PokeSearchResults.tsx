@@ -1,7 +1,7 @@
 import { useAnswersState } from '@yext/answers-headless-react';
 import React, { FC } from 'react';
 import { ViewProps, StyleSheet, Text, View, Animated } from 'react-native';
-import { PokeTile } from './src/PokeTile';
+import { PokeTile } from './PokeTile';
 
 interface IPokeSearchResults extends ViewProps {}
 
@@ -23,10 +23,11 @@ export const PokeSearchResults: FC<IPokeSearchResults> = () => {
     ),
   );
 
-  const renderTileRow = pokeChunks => (
-    <View style={styles.rowStyle}>
-      {pokeChunks.map(pokemon => (
+  const renderTileRow = (pokeChunks, key) => (
+    <View key={key} style={styles.rowStyle}>
+      {pokeChunks.map((pokemon, i) => (
         <PokeTile
+          key={i}
           pokemonName={pokemon.rawData.name as string}
           pokedexNumber={pokemon.rawData.id as number}
           spriteUrl={
@@ -40,7 +41,7 @@ export const PokeSearchResults: FC<IPokeSearchResults> = () => {
   return (
     <Animated.ScrollView>
       {verticalSearchResults ? (
-        verticalSearchResults.map(chunk => renderTileRow(chunk))
+        verticalSearchResults.map((chunk, i) => renderTileRow(chunk, i))
       ) : (
         <Text>Loading</Text>
       )}
@@ -57,25 +58,3 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
 });
-
-/* <PokeTile
-  pokemonName={'Bulbasaur'}
-  pokedexNumber={1}
-  spriteUrl={
-    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png'
-  }
-/>
-<PokeTile
-  pokemonName={'Ivysaur'}
-  pokedexNumber={2}
-  spriteUrl={
-    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png'
-  }
-/>
-<PokeTile
-  pokemonName={'Venusaur'}
-  pokedexNumber={3}
-  spriteUrl={
-    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png'
-  }
-/> */

@@ -34,11 +34,16 @@ const styles = StyleSheet.create({
     // flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#F0F0F0',
+    backgroundColor: '#E8E8E8',
     borderRadius: 10,
     height: 96,
     width: 96,
     color: 'black',
+    shadowOffset: {
+      width: 4,
+      height: 4,
+    },
+    shadowOpacity: 4,
   },
   textContainer: {
     alignItems: 'center',
