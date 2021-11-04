@@ -12,6 +12,7 @@ import {
   View,
   FlatList,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Octicons';
 
 interface ISearchBar extends ViewProps {}
 
@@ -38,7 +39,7 @@ export const SearchBar: FC<ISearchBar> = () => {
 
   useEffect(() => {
     answersActions.executeVerticalAutoComplete();
-    answersActions.executeVerticalQuery();
+    // answersActions.executeVertbuicalQuery();
   }, [answersActions, query]);
 
   const renderAutoCompleteRow = (item: string) => (
@@ -47,14 +48,20 @@ export const SearchBar: FC<ISearchBar> = () => {
         { backgroundColor: pressed ? '#A9A9A9' : '#F0F0F0' },
         styles.rowTextContainer,
       ]}
-      onPressOut={() => onPressOut(item)}>
+      onPressOut={() => onRowPressOut(item)}>
       <Text style={styles.font}>{item}</Text>
     </Pressable>
   );
 
-  const onPressOut = (item: string) => {
-    answersActions.setQuery(item);
+  const onRowPressOut = (item: string) => {
     setHideResults(true);
+    answersActions.setQuery(item);
+    answersActions.executeVerticalQuery();
+  };
+
+  const onSearchIconPressOut = () => {
+    setHideResults(true);
+    answersActions.executeVerticalQuery();
   };
 
   const onChangeText = (text: string) => {
@@ -64,12 +71,17 @@ export const SearchBar: FC<ISearchBar> = () => {
 
   return (
     <View style={styles.searchContainer}>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search Pokémon..."
-        onChangeText={onChangeText}
-        value={query}
-      />
+      <View style={styles.searchInput}>
+        <Pressable onPressOut={() => onSearchIconPressOut()}>
+          <Icon style={styles.searchIcon} size={22} name={'search'} />
+        </Pressable>
+        <TextInput
+          style={styles.font}
+          placeholder="Search Pokémon..."
+          onChangeText={onChangeText}
+          value={query}
+        />
+      </View>
       {!hideResults && (
         <FlatList
           data={autoCompleteResults}
@@ -91,7 +103,12 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#C0C0C0',
   },
+  searchInputContainer: {
+    flexDirection: 'row',
+    flex: 1,
+  },
   searchInput: {
+    flexDirection: 'row',
     backgroundColor: '#F0F0F0',
     height: 40,
     marginHorizontal: 18,
@@ -99,8 +116,13 @@ const styles = StyleSheet.create({
     paddingLeft: 3,
     fontFamily: 'Exo2-Regular',
     fontWeight: '600',
+    alignItems: 'center',
   },
   searchContainer: {
     zIndex: 1,
+  },
+  searchIcon: {
+    paddingLeft: 10,
+    paddingRight: 14,
   },
 });

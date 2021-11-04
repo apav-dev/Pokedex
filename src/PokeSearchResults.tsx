@@ -23,6 +23,8 @@ export const PokeSearchResults: FC<IPokeSearchResults> = () => {
     ),
   );
 
+  const searchLoading = useAnswersState(state => state.vertical.searchLoading);
+
   const renderTileRow = (pokeChunks, key) => (
     <View key={key} style={styles.rowStyle}>
       {pokeChunks.map((pokemon, i) => (
@@ -39,8 +41,8 @@ export const PokeSearchResults: FC<IPokeSearchResults> = () => {
   );
 
   return (
-    <Animated.ScrollView>
-      {verticalSearchResults ? (
+    <Animated.ScrollView style={styles.container}>
+      {!searchLoading ? (
         verticalSearchResults.map((chunk, i) => renderTileRow(chunk, i))
       ) : (
         <Text>Loading</Text>
@@ -50,6 +52,9 @@ export const PokeSearchResults: FC<IPokeSearchResults> = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    // marginTop: 50,bu
+  },
   rowStyle: {
     flex: 1,
     justifyContent: 'space-around',
