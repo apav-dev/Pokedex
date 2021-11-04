@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
 import { ImageBackground, SafeAreaView, StyleSheet, View } from 'react-native';
 import { AnswersHeadlessProvider } from '@yext/answers-headless-react';
@@ -14,11 +6,13 @@ import { PokeSearchResults } from './PokeSearchResults';
 
 // TODO:
 // red background with search bar and filter options at the top
-// rows of tiles, tile representing one pokemon. Each will have front sprite, name, and number
 // when clicking on tile, pull up summary of Pokemon
-// snap on scroll
+// tile press effect
+// search bar press effect
+// loading icon until pictures are all loaded
 // loading icon followed by cool tile animation
 // pagination
+
 // write guide on how to build the search for these different elements
 const endpoints = {
   universalSearch:

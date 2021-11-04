@@ -75,7 +75,9 @@ export const SearchBar: FC<ISearchBar> = () => {
   return (
     <View style={styles.searchContainer}>
       <View style={styles.searchInput}>
-        <Pressable onPressOut={() => onSearchIconPressOut()}>
+        <Pressable
+          // disabled={!query}
+          onPressOut={() => onSearchIconPressOut()}>
           <Icon style={styles.searchIcon} size={22} name={'search'} />
         </Pressable>
         <TextInput

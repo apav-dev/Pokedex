@@ -31,7 +31,6 @@ export const PokeTile: FC<IPokeTileProps> = ({
 
 const styles = StyleSheet.create({
   tile: {
-    // flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#E8E8E8',
@@ -44,6 +43,8 @@ const styles = StyleSheet.create({
       height: 4,
     },
     shadowOpacity: 4,
+    marginVertical: 10,
+    marginHorizontal: 10,
   },
   textContainer: {
     alignItems: 'center',

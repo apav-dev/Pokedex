@@ -1,51 +1,40 @@
 import { useAnswersState } from '@yext/answers-headless-react';
 import React, { FC } from 'react';
-import { ViewProps, StyleSheet, Text, View, Animated } from 'react-native';
+import {
+  ViewProps,
+  StyleSheet,
+  Animated,
+  ActivityIndicator,
+} from 'react-native';
 import { PokeTile } from './PokeTile';
 
 interface IPokeSearchResults extends ViewProps {}
 
 export const PokeSearchResults: FC<IPokeSearchResults> = () => {
-  const verticalSearchResults = useAnswersState(state =>
-    state.vertical.results?.verticalResults.results.reduce(
-      (resultArray, item, index) => {
-        const chunkIndex = Math.floor(index / 3);
-
-        if (!resultArray[chunkIndex]) {
-          resultArray[chunkIndex] = []; // start a new chunk
-        }
-
-        resultArray[chunkIndex].push(item);
-
-        return resultArray;
-      },
-      [],
-    ),
+  const pokemon = useAnswersState(
+    state => state.vertical.results?.verticalResults.results,
   );
-
   const searchLoading = useAnswersState(state => state.vertical.searchLoading);
 
-  const renderTileRow = (pokeChunks, key) => (
-    <View key={key} style={styles.rowStyle}>
-      {pokeChunks.map((pokemon, i) => (
-        <PokeTile
-          key={i}
-          pokemonName={pokemon.rawData.name as string}
-          pokedexNumber={pokemon.rawData.id as number}
-          spriteUrl={
-            pokemon.rawData.c_sprites.officialArtwork.sourceUrl as string
-          }
-        />
-      ))}
-    </View>
-  );
-
   return (
-    <Animated.ScrollView style={styles.container}>
-      {!searchLoading && verticalSearchResults ? (
-        verticalSearchResults.map((chunk, i) => renderTileRow(chunk, i))
+    <Animated.ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.tilesGrid}
+      decelerationRate="fast"
+      snapToInterval={116}
+      snapToAlignment="start">
+      {!searchLoading && pokemon ? (
+        // verticalSearchResults.map((chunk, i) => renderTileRow(chunk, i))
+        pokemon.map((p, i) => (
+          <PokeTile
+            key={i}
+            pokemonName={p.rawData.name as string}
+            pokedexNumber={p.rawData.id as number}
+            spriteUrl={p.rawData.c_sprites.officialArtwork.sourceUrl as string}
+          />
+        ))
       ) : (
-        <Text>Loading</Text>
+        <ActivityIndicator style={styles.spinner} size="large" />
       )}
     </Animated.ScrollView>
   );
@@ -54,7 +43,11 @@ export const PokeSearchResults: FC<IPokeSearchResults> = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: 50,bu
+  },
+  tilesGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
   },
   rowStyle: {
     flex: 1,
@@ -62,5 +55,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginVertical: 10,
+  },
+  spinner: {
+    alignItems: 'center',
+    marginTop: 50,
   },
 });
