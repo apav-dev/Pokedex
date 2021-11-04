@@ -16,6 +16,9 @@ import { PokeSearchResults } from './PokeSearchResults';
 // red background with search bar and filter options at the top
 // rows of tiles, tile representing one pokemon. Each will have front sprite, name, and number
 // when clicking on tile, pull up summary of Pokemon
+// snap on scroll
+// loading icon followed by cool tile animation
+// pagination
 // write guide on how to build the search for these different elements
 const endpoints = {
   universalSearch:

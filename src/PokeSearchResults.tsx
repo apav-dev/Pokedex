@@ -42,7 +42,7 @@ export const PokeSearchResults: FC<IPokeSearchResults> = () => {
 
   return (
     <Animated.ScrollView style={styles.container}>
-      {!searchLoading ? (
+      {!searchLoading && verticalSearchResults ? (
         verticalSearchResults.map((chunk, i) => renderTileRow(chunk, i))
       ) : (
         <Text>Loading</Text>
@@ -53,6 +53,7 @@ export const PokeSearchResults: FC<IPokeSearchResults> = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     // marginTop: 50,bu
   },
   rowStyle: {

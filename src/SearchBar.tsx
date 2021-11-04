@@ -11,8 +11,11 @@ import {
   TextInput,
   View,
   FlatList,
+  Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
+
+const { width, height } = Dimensions.get('window');
 
 interface ISearchBar extends ViewProps {}
 
@@ -84,6 +87,7 @@ export const SearchBar: FC<ISearchBar> = () => {
       </View>
       {!hideResults && (
         <FlatList
+          style={styles.dropdownContainer}
           data={autoCompleteResults}
           renderItem={item => renderAutoCompleteRow(item.item)}
         />
@@ -92,6 +96,7 @@ export const SearchBar: FC<ISearchBar> = () => {
   );
 };
 
+// TODO: adjust styling for different phone screens
 const styles = StyleSheet.create({
   font: {
     fontFamily: 'Exo2-Regular',
@@ -124,5 +129,10 @@ const styles = StyleSheet.create({
   searchIcon: {
     paddingLeft: 10,
     paddingRight: 14,
+  },
+  dropdownContainer: {
+    position: 'absolute',
+    marginTop: 40,
+    width: width - 5,
   },
 });
