@@ -1,20 +1,47 @@
-import React, { FC } from 'react';
-import { Image, StyleSheet, View, ViewProps, Text } from 'react-native';
+import React, { FC, useEffect } from 'react';
+import {
+  Image,
+  StyleSheet,
+  View,
+  ViewProps,
+  Text,
+  Animated,
+} from 'react-native';
 import { formatDexNumber } from './utils/formatDexNumber';
 
 interface IPokeTileProps extends ViewProps {
+  diagonal: number;
   pokedexNumber: number;
   pokemonName: string;
   spriteUrl: string;
 }
 
 export const PokeTile: FC<IPokeTileProps> = ({
+  diagonal,
   pokedexNumber,
   pokemonName,
   spriteUrl,
 }) => {
+  const fadeAnimation = new Animated.Value(0);
+
+  useEffect(() => {
+    Animated.timing(fadeAnimation, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+      // TODO: add delay
+      delay: 75 * diagonal,
+    }).start();
+  }, []);
+
   return (
-    <View style={styles.tile}>
+    <Animated.View
+      style={[
+        styles.tile,
+        {
+          opacity: fadeAnimation,
+        },
+      ]}>
       <Image
         style={styles.pokeImage}
         source={{
@@ -25,7 +52,7 @@ export const PokeTile: FC<IPokeTileProps> = ({
         <Text style={styles.font}>{formatDexNumber(pokedexNumber)}</Text>
         <Text style={styles.font}>{pokemonName}</Text>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 

@@ -5,12 +5,11 @@ import { SearchBar } from './SearchBar';
 import { PokeSearchResults } from './PokeSearchResults';
 
 // TODO:
-// red background with search bar and filter options at the top
+// filter options at the top
 // when clicking on tile, pull up summary of Pokemon
 // tile press effect
 // search bar press effect
 // loading icon until pictures are all loaded
-// loading icon followed by cool tile animation
 // pagination
 
 // write guide on how to build the search for these different elements

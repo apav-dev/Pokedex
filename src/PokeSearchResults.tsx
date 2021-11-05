@@ -28,6 +28,7 @@ export const PokeSearchResults: FC<IPokeSearchResults> = () => {
         pokemon.map((p, i) => (
           <PokeTile
             key={i}
+            diagonal={Math.floor(i / 3) + (i % 3)}
             pokemonName={p.rawData.name as string}
             pokedexNumber={p.rawData.id as number}
             spriteUrl={p.rawData.c_sprites.officialArtwork.sourceUrl as string}
