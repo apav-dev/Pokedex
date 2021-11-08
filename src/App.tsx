@@ -3,6 +3,7 @@ import { ImageBackground, SafeAreaView, StyleSheet, View } from 'react-native';
 import { AnswersHeadlessProvider } from '@yext/answers-headless-react';
 import { SearchBar } from './SearchBar';
 import { PokeSearchResults } from './PokeSearchResults';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 // TODO:
 // filter options at the top
@@ -29,6 +30,8 @@ const endpoints = {
     'https://liveapi-sandbox.yext.com/v2/accounts/me/answers/filtersearch',
 };
 
+const statusBarHeight = getStatusBarHeight();
+
 const App = () => {
   return (
     <AnswersHeadlessProvider
@@ -40,10 +43,18 @@ const App = () => {
       <ImageBackground
         source={require('./assets/images/pokeBackground.png')}
         style={styles.container}>
+        <View
+          style={[
+            styles.statusBar,
+            {
+              height: statusBarHeight,
+            },
+          ]}
+        />
         <SafeAreaView style={styles.container}>
           <View style={styles.container}>
-            <SearchBar />
-            <PokeSearchResults />
+            <SearchBar style={styles.container}/>
+            <PokeSearchResults style={styles.container} />
           </View>
         </SafeAreaView>
       </ImageBackground>
@@ -52,8 +63,10 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
+  statusBar: {
+    backgroundColor: '#DCDCDC',
+  },
   container: {
-    // backgroundColor: '#e4000f',
     flex: 1,
   },
   backgroundImage: {

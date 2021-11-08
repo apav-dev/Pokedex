@@ -14,12 +14,13 @@ import {
   Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
+import { FacetDrawer } from './FacetDrawer';
 
 const { width, height } = Dimensions.get('window');
 
-interface ISearchBar extends ViewProps {}
+interface ISearchBarProps extends ViewProps {}
 
-export const SearchBar: FC<ISearchBar> = () => {
+export const SearchBar: FC<ISearchBarProps> = () => {
   const [hideResults, setHideResults] = useState(false);
 
   const answersActions = useAnswersActions();
@@ -42,7 +43,6 @@ export const SearchBar: FC<ISearchBar> = () => {
 
   useEffect(() => {
     answersActions.executeVerticalAutoComplete();
-    // answersActions.executeVertbuicalQuery();
   }, [answersActions, query]);
 
   const renderAutoCompleteRow = (item: string) => (
@@ -94,6 +94,12 @@ export const SearchBar: FC<ISearchBar> = () => {
           renderItem={item => renderAutoCompleteRow(item.item)}
         />
       )}
+      <View style={styles.filtersContainer}>
+        <FacetDrawer
+          facetName={'Generation'}
+          facetOptions={['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII']}
+        />
+      </View>
     </View>
   );
 };
@@ -127,6 +133,13 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     zIndex: 1,
+    backgroundColor: '#DCDCDC',
+    justifyContent: 'flex-start',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.35,
   },
   searchIcon: {
     paddingLeft: 10,
@@ -136,5 +149,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     marginTop: 40,
     width: width - 5,
+    zIndex: 2,
+  },
+  filtersContainer: {
+    flexDirection: 'row',
+    marginVertical: 8,
+    marginHorizontal: 18,
+    height: 30,
   },
 });

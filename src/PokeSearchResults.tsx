@@ -8,9 +8,9 @@ import {
 } from 'react-native';
 import { PokeTile } from './PokeTile';
 
-interface IPokeSearchResults extends ViewProps {}
+interface IPokeSearchResultsProps extends ViewProps {}
 
-export const PokeSearchResults: FC<IPokeSearchResults> = () => {
+export const PokeSearchResults: FC<IPokeSearchResultsProps> = () => {
   const pokemon = useAnswersState(
     state => state.vertical.results?.verticalResults.results,
   );
