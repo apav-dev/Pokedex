@@ -95,10 +95,8 @@ export const SearchBar: FC<ISearchBarProps> = () => {
         />
       )}
       <View style={styles.filtersContainer}>
-        <FacetDrawer
-          facetName={'Generation'}
-          facetOptions={['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII']}
-        />
+        <FacetDrawer filterName={'Generation'} />
+        <FacetDrawer filterName={'Types Name'} />
       </View>
     </View>
   );
@@ -156,5 +154,6 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 18,
     height: 30,
+    justifyContent: 'center',
   },
 });

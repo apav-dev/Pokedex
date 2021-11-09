@@ -53,7 +53,7 @@ const App = () => {
         />
         <SafeAreaView style={styles.container}>
           <View style={styles.container}>
-            <SearchBar style={styles.container}/>
+            <SearchBar style={styles.container} />
             <PokeSearchResults style={styles.container} />
           </View>
         </SafeAreaView>
