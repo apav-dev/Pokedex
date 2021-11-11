@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/core';
 import React, { FC, useEffect } from 'react';
 import {
   Image,
@@ -8,7 +9,7 @@ import {
   Animated,
   TouchableOpacity,
 } from 'react-native';
-import { formatDexNumber } from './utils/formatDexNumber';
+import { formatDexNumber } from '../utils/formatDexNumber';
 
 interface IPokeTileProps extends ViewProps {
   diagonal: number;
@@ -23,6 +24,8 @@ export const PokeTile: FC<IPokeTileProps> = ({
   pokemonName,
   spriteUrl,
 }) => {
+  const navigation = useNavigation();
+
   const fadeAnimation = new Animated.Value(0);
 
   useEffect(() => {
@@ -36,7 +39,8 @@ export const PokeTile: FC<IPokeTileProps> = ({
   }, []);
 
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPressOut={() => navigation.navigate('PokeSummary', { pokeId: '1' })}>
       <Animated.View
         style={[
           styles.tile,

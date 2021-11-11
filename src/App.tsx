@@ -1,9 +1,6 @@
 import React from 'react';
-import { ImageBackground, SafeAreaView, StyleSheet, View } from 'react-native';
 import { AnswersHeadlessProvider } from '@yext/answers-headless-react';
-import { SearchBar } from './SearchBar';
-import { PokeSearchResults } from './PokeSearchResults';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import MainNavigation from './routing/MainNavigation';
 
 // TODO:
 // filter options at the top
@@ -12,6 +9,11 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 // search bar press effect
 // loading icon until pictures are all loaded
 // pagination
+
+export type RootStackParamsList = {
+  SearchScreen: undefined;
+  PokeSummaryScreen: { pokeId: string };
+};
 
 // write guide on how to build the search for these different elements
 const endpoints = {
@@ -30,8 +32,6 @@ const endpoints = {
     'https://liveapi-sandbox.yext.com/v2/accounts/me/answers/filtersearch',
 };
 
-const statusBarHeight = getStatusBarHeight();
-
 const App = () => {
   return (
     <AnswersHeadlessProvider
@@ -40,39 +40,9 @@ const App = () => {
       locale="en"
       verticalKey="pokémon"
       endpoints={endpoints}>
-      <ImageBackground
-        source={require('./assets/images/pokeBackground.png')}
-        style={styles.container}>
-        <View
-          style={[
-            styles.statusBar,
-            {
-              height: statusBarHeight,
-            },
-          ]}
-        />
-        <SafeAreaView style={styles.container}>
-          <View style={styles.container}>
-            <SearchBar style={styles.container} />
-            <PokeSearchResults style={styles.container} />
-          </View>
-        </SafeAreaView>
-      </ImageBackground>
+      <MainNavigation />
     </AnswersHeadlessProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  statusBar: {
-    backgroundColor: '#DCDCDC',
-  },
-  container: {
-    flex: 1,
-  },
-  backgroundImage: {
-    height: '100%',
-    width: '100%',
-  },
-});
 
 export default App;

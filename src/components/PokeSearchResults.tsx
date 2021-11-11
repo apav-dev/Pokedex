@@ -1,20 +1,38 @@
-import { useAnswersState } from '@yext/answers-headless-react';
+import {
+  // useAnswersActions,
+  useAnswersState,
+} from '@yext/answers-headless-react';
 import React, { FC } from 'react';
 import {
   ViewProps,
   StyleSheet,
   Animated,
   ActivityIndicator,
+  // NativeScrollEvent,
+  // NativeSyntheticEvent,
 } from 'react-native';
 import { PokeTile } from './PokeTile';
 
 interface IPokeSearchResultsProps extends ViewProps {}
 
 export const PokeSearchResults: FC<IPokeSearchResultsProps> = () => {
+  // const answersActions = useAnswersActions();
   const pokemon = useAnswersState(
     state => state.vertical.results?.verticalResults.results,
   );
   const searchLoading = useAnswersState(state => state.vertical.searchLoading);
+
+  // const rows = pokemon ? Math.floor(pokemon?.length / 3) : 0;
+  // const halfwayPoint = (116 * rows) / 2;
+
+  // const handleOnScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+  //   console.log(halfwayPoint);
+  //   console.log(e.nativeEvent.contentOffset.y);
+  //   if (e.nativeEvent.contentOffset.y === halfwayPoint) {
+  //     answersActions.setOffset(25);
+  //     answersActions.executeVerticalQuery();
+  //   }
+  // };
 
   return (
     <Animated.ScrollView
@@ -22,9 +40,9 @@ export const PokeSearchResults: FC<IPokeSearchResultsProps> = () => {
       contentContainerStyle={styles.tilesGrid}
       decelerationRate="fast"
       snapToInterval={116}
+      // onScroll={e => handleOnScroll(e)}
       snapToAlignment="start">
       {!searchLoading && pokemon ? (
-        // verticalSearchResults.map((chunk, i) => renderTileRow(chunk, i))
         pokemon.map((p, i) => (
           <PokeTile
             key={i}
