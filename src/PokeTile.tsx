@@ -6,6 +6,7 @@ import {
   ViewProps,
   Text,
   Animated,
+  TouchableOpacity,
 } from 'react-native';
 import { formatDexNumber } from './utils/formatDexNumber';
 
@@ -35,24 +36,26 @@ export const PokeTile: FC<IPokeTileProps> = ({
   }, []);
 
   return (
-    <Animated.View
-      style={[
-        styles.tile,
-        {
-          opacity: fadeAnimation,
-        },
-      ]}>
-      <Image
-        style={styles.pokeImage}
-        source={{
-          uri: spriteUrl,
-        }}
-      />
-      <View style={styles.textContainer}>
-        <Text style={styles.font}>{formatDexNumber(pokedexNumber)}</Text>
-        <Text style={styles.font}>{pokemonName}</Text>
-      </View>
-    </Animated.View>
+    <TouchableOpacity>
+      <Animated.View
+        style={[
+          styles.tile,
+          {
+            opacity: fadeAnimation,
+          },
+        ]}>
+        <Image
+          style={styles.pokeImage}
+          source={{
+            uri: spriteUrl,
+          }}
+        />
+        <View style={styles.textContainer}>
+          <Text style={styles.font}>{formatDexNumber(pokedexNumber)}</Text>
+          <Text style={styles.font}>{pokemonName}</Text>
+        </View>
+      </Animated.View>
+    </TouchableOpacity>
   );
 };
 
