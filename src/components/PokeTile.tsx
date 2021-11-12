@@ -40,7 +40,9 @@ export const PokeTile: FC<IPokeTileProps> = ({
 
   return (
     <TouchableOpacity
-      onPressOut={() => navigation.navigate('PokeSummary', { pokeId: '1' })}>
+      onPressOut={() =>
+        navigation.navigate('PokeSummary', { pokeId: pokedexNumber })
+      }>
       <Animated.View
         style={[
           styles.tile,
