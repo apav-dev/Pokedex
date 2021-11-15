@@ -20,6 +20,7 @@ const { width, height } = Dimensions.get('window');
 
 interface IFacetDrawerProps extends ViewProps {
   filterName: string;
+  displayName?: string;
   transform?: (value: string) => string;
   sort?: (value: string[]) => string[];
 }
@@ -31,6 +32,7 @@ export interface Selection {
 
 export const FacetDrawer: FC<IFacetDrawerProps> = ({
   filterName,
+  displayName,
   transform,
   sort,
 }) => {
@@ -42,7 +44,7 @@ export const FacetDrawer: FC<IFacetDrawerProps> = ({
   const answersActions = useAnswersActions();
 
   const facet = useAnswersState(state => state.filters.facets)?.find(
-    facet => facet.displayName == filterName,
+    f => f.displayName == filterName,
   );
 
   const selectedFacetOptions =
@@ -87,19 +89,9 @@ export const FacetDrawer: FC<IFacetDrawerProps> = ({
   const getFacetOptions = () => {
     if (facet) {
       if (typeof sort === 'function') {
-        return sort(
-          facet?.options.map(option =>
-            typeof transform === 'function'
-              ? transform(option.displayName)
-              : option.displayName,
-          ),
-        );
+        return sort(facet?.options.map(option => option.displayName));
       } else {
-        return facet?.options.map(option =>
-          typeof transform === 'function'
-            ? transform(option.displayName)
-            : option.displayName,
-        );
+        return facet?.options.map(option => option.displayName);
       }
     } else {
       return [];
@@ -110,7 +102,6 @@ export const FacetDrawer: FC<IFacetDrawerProps> = ({
   const onFacetSelection = checkedRows => {
     const facetFieldId = facet?.fieldId;
     const checkedRowValues = checkedRows.map(cr => cr.value);
-    // console.log(selectedFacets);
 
     if (facetFieldId) {
       allFacetOptions.forEach(option => {
@@ -135,10 +126,16 @@ export const FacetDrawer: FC<IFacetDrawerProps> = ({
     }
   };
 
+  const renderLabel = (label: string) => (
+    <Text style={styles.checkboxText}>
+      {typeof transform === 'function' ? transform(label) : label}
+    </Text>
+  );
+
   return (
     <View style={styles.filterContainer}>
       <View style={styles.textContainer}>
-        <Text style={styles.font}>{filterName}</Text>
+        <Text style={styles.font}>{displayName || filterName}</Text>
         <Pressable onPressOut={() => setOpen(!open)}>
           <Animated.View
             style={{
@@ -153,6 +150,7 @@ export const FacetDrawer: FC<IFacetDrawerProps> = ({
         <SelectMultiple
           rowStyle={styles.rowStyle}
           labelStyle={styles.checkboxText}
+          renderLabel={renderLabel}
           items={getFacetOptions()}
           selectedItems={
             facet?.options

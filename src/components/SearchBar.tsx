@@ -98,7 +98,11 @@ export const SearchBar: FC<ISearchBarProps> = () => {
       )}
       <View style={styles.filtersContainer}>
         <FacetDrawer filterName={'Generation'} sort={sortRomans} />
-        <FacetDrawer filterName={'Types Name'} transform={toProperCase} />
+        <FacetDrawer
+          filterName={'Types Name'}
+          displayName={'Types'}
+          transform={toProperCase}
+        />
       </View>
     </View>
   );
