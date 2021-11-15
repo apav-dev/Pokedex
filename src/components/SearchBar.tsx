@@ -14,6 +14,8 @@ import {
   Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
+import { sortRomans } from '../utils/sortRomans';
+import { toProperCase } from '../utils/toProperCase';
 import { FacetDrawer } from './FacetDrawer';
 
 const { width, height } = Dimensions.get('window');
@@ -95,8 +97,8 @@ export const SearchBar: FC<ISearchBarProps> = () => {
         />
       )}
       <View style={styles.filtersContainer}>
-        <FacetDrawer filterName={'Generation'} />
-        <FacetDrawer filterName={'Types Name'} />
+        <FacetDrawer filterName={'Generation'} sort={sortRomans} />
+        <FacetDrawer filterName={'Types Name'} transform={toProperCase} />
       </View>
     </View>
   );

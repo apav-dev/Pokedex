@@ -20,6 +20,8 @@ const { width, height } = Dimensions.get('window');
 
 interface IFacetDrawerProps extends ViewProps {
   filterName: string;
+  transform?: (value: string) => string;
+  sort?: (value: string[]) => string[];
 }
 
 export interface Selection {
@@ -27,7 +29,11 @@ export interface Selection {
   value: string;
 }
 
-export const FacetDrawer: FC<IFacetDrawerProps> = ({ filterName }) => {
+export const FacetDrawer: FC<IFacetDrawerProps> = ({
+  filterName,
+  transform,
+  sort,
+}) => {
   const [open, setOpen] = useState(false);
 
   const flipAnimation = useRef(new Animated.Value(0)).current;
@@ -78,6 +84,28 @@ export const FacetDrawer: FC<IFacetDrawerProps> = ({ filterName }) => {
     }).start();
   }, [open]);
 
+  const getFacetOptions = () => {
+    if (facet) {
+      if (typeof sort === 'function') {
+        return sort(
+          facet?.options.map(option =>
+            typeof transform === 'function'
+              ? transform(option.displayName)
+              : option.displayName,
+          ),
+        );
+      } else {
+        return facet?.options.map(option =>
+          typeof transform === 'function'
+            ? transform(option.displayName)
+            : option.displayName,
+        );
+      }
+    } else {
+      return [];
+    }
+  };
+
   // TODO: maybe ask answers-headless team about a function that could set all facets at once
   const onFacetSelection = checkedRows => {
     const facetFieldId = facet?.fieldId;
@@ -125,7 +153,7 @@ export const FacetDrawer: FC<IFacetDrawerProps> = ({ filterName }) => {
         <SelectMultiple
           rowStyle={styles.rowStyle}
           labelStyle={styles.checkboxText}
-          items={facet?.options.map(option => option.displayName) || []}
+          items={getFacetOptions()}
           selectedItems={
             facet?.options
               .filter(option => option.selected === true)
