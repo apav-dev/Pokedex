@@ -1,7 +1,12 @@
 import React from 'react';
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import {
+  Dimensions,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+} from 'react-native';
 import { formatDexNumber } from '../utils/formatDexNumber';
-import { BaseStats } from './BaseStatChart';
 
 type PokemonProps = {
   id: string;
@@ -16,22 +21,21 @@ export const Pokemon = ({
   name,
   imageUrl,
 }: PokemonProps): React.ReactElement => (
-  <View style={styles.container}>
-    <Image style={styles.pokeImage} source={{ uri: imageUrl }} />
+  <SafeAreaView style={styles.container}>
     <Text style={styles.pokeTitle}>{`${formatDexNumber(parseInt(id))}`}</Text>
     <Text style={styles.pokeTitle}>{name}</Text>
-  </View>
+    <Image style={styles.pokeImage} source={{ uri: imageUrl }} />
+  </SafeAreaView>
 );
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 3,
     alignItems: 'center',
-    borderWidth: 1,
+    justifyContent: 'center',
     width: width,
   },
   pokeImage: {
-    // flex: 1,
     height: 200,
     width: 200,
   },

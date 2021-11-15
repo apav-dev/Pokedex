@@ -1,6 +1,6 @@
 import { useAnswersState } from '@yext/answers-headless-react';
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BaseStats } from '../components/BaseStatChart';
 import { PokeInfo } from '../components/PokeInfo';
@@ -41,6 +41,13 @@ export const PokeSummaryScreen = ({
 
   return (
     <SafeAreaView style={styles.container}>
+      <View>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPressOut={() => navigation.navigate('Search')}>
+          <Text style={styles.backButtonText}>{'< Search'}</Text>
+        </TouchableOpacity>
+      </View>
       <Pokemon
         id={pokemon?.id as string}
         name={pokemon?.rawData.name as string}
@@ -56,6 +63,7 @@ export const PokeSummaryScreen = ({
         height={pokemon?.rawData.c_height as number}
         weight={pokemon?.rawData.c_weight as number}
         stats={getPokeStats() as BaseStats}
+        types={pokemon?.rawData.c_types}
       />
     </SafeAreaView>
   );
@@ -68,5 +76,14 @@ const styles = StyleSheet.create({
   pokeImage: {
     height: 60,
     width: 60,
+  },
+  backButton: {
+    marginLeft: 12,
+  },
+  backButtonText: {
+    fontFamily: 'Exo2-Regular',
+    fontWeight: '600',
+    fontSize: 16,
+    color: '#006ee6',
   },
 });

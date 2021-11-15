@@ -14,8 +14,8 @@ type DataRowProps = {
 
 export const DataRow = ({ cells }: DataRowProps): React.ReactElement => (
   <View style={styles.container}>
-    {cells.map(cell => (
-      <View style={[styles.cell, { width: width / cells.length }]}>
+    {cells.map((cell, i) => (
+      <View key={i} style={[styles.cell, { width: width / cells.length }]}>
         <Text style={styles.label}>{cell.label}</Text>
         {cell.value}
       </View>
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
+    marginVertical: 4,
   },
   cell: {
     height: 50,

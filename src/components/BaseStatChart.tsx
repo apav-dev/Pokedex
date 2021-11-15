@@ -25,7 +25,7 @@ type BaseStatChartProps = {
 export const BaseStatChart = ({
   stats,
 }: BaseStatChartProps): React.ReactElement => (
-  <VictoryChart polar theme={VictoryTheme.material}>
+  <VictoryChart polar theme={VictoryTheme.material} height={300} width={300}>
     <VictoryArea
       style={{
         data: {
