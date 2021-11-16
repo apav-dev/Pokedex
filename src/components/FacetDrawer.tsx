@@ -37,12 +37,14 @@ export const FacetDrawer: FC<IFacetDrawerProps> = ({
   sort,
 }) => {
   const [open, setOpen] = useState(false);
+  const [facetWasPressed, setFacetWasPressed] = useState(false);
 
   const flipAnimation = useRef(new Animated.Value(0)).current;
   const expandAnimation = useRef(new Animated.Value(0)).current;
 
   const answersActions = useAnswersActions();
 
+  const searchLoading = useAnswersState(state => state.vertical.searchLoading);
   const facet = useAnswersState(state => state.filters.facets)?.find(
     f => f.displayName == filterName,
   );
@@ -86,6 +88,13 @@ export const FacetDrawer: FC<IFacetDrawerProps> = ({
     }).start();
   }, [open]);
 
+  useEffect(() => {
+    if (facetWasPressed) {
+      answersActions.executeVerticalQuery();
+      setFacetWasPressed(false);
+    }
+  }, [facetWasPressed]);
+
   const getFacetOptions = () => {
     if (facet) {
       if (typeof sort === 'function') {
@@ -124,6 +133,7 @@ export const FacetDrawer: FC<IFacetDrawerProps> = ({
         }
       });
     }
+    setFacetWasPressed(true);
   };
 
   const renderLabel = (label: string) => (

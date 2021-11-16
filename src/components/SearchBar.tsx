@@ -23,7 +23,7 @@ const { width, height } = Dimensions.get('window');
 interface ISearchBarProps extends ViewProps {}
 
 export const SearchBar: FC<ISearchBarProps> = () => {
-  const [hideResults, setHideResults] = useState(false);
+  const [hideAutoComplete, setHideAutoComplete] = useState(false);
 
   const answersActions = useAnswersActions();
   const query = useAnswersState(state => state.query.query);
@@ -39,7 +39,7 @@ export const SearchBar: FC<ISearchBarProps> = () => {
   }, []);
 
   useEffect(() => {
-    answersActions.executeVerticalQuery();
+    verticalLimit === 50 && answersActions.executeVerticalQuery();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [verticalLimit]);
 
@@ -59,18 +59,19 @@ export const SearchBar: FC<ISearchBarProps> = () => {
   );
 
   const onRowPressOut = (item: string) => {
-    setHideResults(true);
+    setHideAutoComplete(true);
     answersActions.setQuery(item);
     answersActions.executeVerticalQuery();
   };
 
   const onSearchIconPressOut = () => {
-    setHideResults(true);
+    setHideAutoComplete(true);
+    answersActions.resetFacets();
     answersActions.executeVerticalQuery();
   };
 
   const onChangeText = (text: string) => {
-    setHideResults(false);
+    setHideAutoComplete(false);
     answersActions.setQuery(text);
   };
 
@@ -89,7 +90,7 @@ export const SearchBar: FC<ISearchBarProps> = () => {
           value={query}
         />
       </View>
-      {!hideResults && (
+      {!hideAutoComplete && (
         <FlatList
           style={styles.dropdownContainer}
           data={autoCompleteResults}
