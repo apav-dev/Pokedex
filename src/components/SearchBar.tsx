@@ -1,6 +1,7 @@
 import {
   useAnswersActions,
   useAnswersState,
+  useAnswersUtilities,
 } from '@yext/answers-headless-react';
 import React, { FC, useEffect, useState } from 'react';
 import {
@@ -12,10 +13,13 @@ import {
   View,
   FlatList,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Octicons';
+import OcticonsIcon from 'react-native-vector-icons/Octicons';
+import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import { sortRomans } from '../utils/sortRomans';
 import { toProperCase } from '../utils/toProperCase';
+import { AppliedFilters } from './AppliedFilters';
 import { FacetDrawer } from './FacetDrawer';
 
 const { width, height } = Dimensions.get('window');
@@ -26,6 +30,7 @@ export const SearchBar: FC<ISearchBarProps> = () => {
   const [hideAutoComplete, setHideAutoComplete] = useState(false);
 
   const answersActions = useAnswersActions();
+  const utils = useAnswersUtilities();
   const query = useAnswersState(state => state.query.query);
   const autoCompleteResults = useAnswersState(
     state =>
@@ -70,6 +75,12 @@ export const SearchBar: FC<ISearchBarProps> = () => {
     answersActions.executeVerticalQuery();
   };
 
+  const onXIconPressOut = () => {
+    answersActions.setQuery('');
+    answersActions.resetFacets();
+    answersActions.executeVerticalQuery();
+  };
+
   const onChangeText = (text: string) => {
     setHideAutoComplete(false);
     answersActions.setQuery(text);
@@ -78,17 +89,21 @@ export const SearchBar: FC<ISearchBarProps> = () => {
   return (
     <View style={styles.searchContainer}>
       <View style={styles.searchInput}>
-        <Pressable
-          // disabled={!query}
-          onPressOut={() => onSearchIconPressOut()}>
-          <Icon style={styles.searchIcon} size={22} name={'search'} />
-        </Pressable>
+        <TouchableOpacity onPressOut={() => onSearchIconPressOut()}>
+          <OcticonsIcon style={styles.searchIcon} size={22} name={'search'} />
+        </TouchableOpacity>
         <TextInput
           style={styles.font}
           placeholder="Search Pokémon..."
           onChangeText={onChangeText}
           value={query}
         />
+        <TouchableOpacity
+          style={styles.xIcon}
+          disabled={query === ''}
+          onPressOut={() => onXIconPressOut()}>
+          <AntDesignIcon style={styles.searchIcon} size={22} name={'close'} />
+        </TouchableOpacity>
       </View>
       {!hideAutoComplete && (
         <FlatList
@@ -105,6 +120,7 @@ export const SearchBar: FC<ISearchBarProps> = () => {
           transform={toProperCase}
         />
       </View>
+      <AppliedFilters />
     </View>
   );
 };
@@ -150,11 +166,14 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 14,
   },
+  xIcon: {
+    marginLeft: 'auto',
+  },
   dropdownContainer: {
     position: 'absolute',
     marginTop: 40,
     width: width - 5,
-    zIndex: 2,
+    zIndex: 3,
   },
   filtersContainer: {
     flexDirection: 'row',
@@ -162,5 +181,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 18,
     height: 30,
     justifyContent: 'center',
+    zIndex: 2,
   },
 });
