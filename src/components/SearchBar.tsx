@@ -30,7 +30,6 @@ export const SearchBar: FC<ISearchBarProps> = () => {
   const [hideAutoComplete, setHideAutoComplete] = useState(false);
 
   const answersActions = useAnswersActions();
-  const utils = useAnswersUtilities();
   const query = useAnswersState(state => state.query.query);
   const autoCompleteResults = useAnswersState(
     state =>
@@ -118,6 +117,7 @@ export const SearchBar: FC<ISearchBarProps> = () => {
           filterName={'Types Name'}
           displayName={'Types'}
           transform={toProperCase}
+          searchable
         />
       </View>
       <AppliedFilters />

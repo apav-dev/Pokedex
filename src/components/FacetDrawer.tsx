@@ -5,14 +5,17 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  TextInput,
+  TouchableOpacity,
   View,
   ViewProps,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Octicons';
+import OcticonsIcon from 'react-native-vector-icons/Octicons';
 import SelectMultiple from 'react-native-select-multiple';
 import {
   useAnswersActions,
   useAnswersState,
+  useAnswersUtilities,
 } from '@yext/answers-headless-react';
 import { Matcher } from '@yext/answers-core';
 
@@ -23,6 +26,7 @@ interface IFacetDrawerProps extends ViewProps {
   displayName?: string;
   transform?: (value: string) => string;
   sort?: (value: string[]) => string[];
+  searchable?: boolean;
 }
 
 export interface Selection {
@@ -35,14 +39,17 @@ export const FacetDrawer: FC<IFacetDrawerProps> = ({
   displayName,
   transform,
   sort,
+  searchable,
 }) => {
   const [open, setOpen] = useState(false);
   const [facetWasPressed, setFacetWasPressed] = useState(false);
+  const [facetSearchValue, setFacetSearchValue] = useState('');
 
   const flipAnimation = useRef(new Animated.Value(0)).current;
   const expandAnimation = useRef(new Animated.Value(0)).current;
 
   const answersActions = useAnswersActions();
+  const utils = useAnswersUtilities();
 
   const searchLoading = useAnswersState(state => state.vertical.searchLoading);
   const facet = useAnswersState(state => state.filters.facets)?.find(
@@ -136,6 +143,24 @@ export const FacetDrawer: FC<IFacetDrawerProps> = ({
     setFacetWasPressed(true);
   };
 
+  const onFacetSearch = () =>
+    utils.searchThroughFacet(
+      {
+        fieldId: 'c_types.name',
+        options: [
+          {
+            matcher: Matcher.Equals,
+            value: facetSearchValue,
+            displayName: 'Types Name',
+            count: 100,
+            selected: true,
+          },
+        ],
+        displayName: 'Types Name',
+      },
+      facetSearchValue,
+    );
+
   const renderLabel = (label: string) => (
     <Text style={styles.checkboxText}>
       {typeof transform === 'function' ? transform(label) : label}
@@ -151,12 +176,30 @@ export const FacetDrawer: FC<IFacetDrawerProps> = ({
             style={{
               transform: [getFlipAnimation()],
             }}>
-            <Icon name={'chevron-down'} size={18} />
+            <OcticonsIcon name={'chevron-down'} size={18} />
           </Animated.View>
         </Pressable>
       </View>
       <Animated.View
         style={[styles.animatedContainer, { height: expandAnimation }]}>
+        {searchable && open && (
+          <View style={styles.facetSearchRow}>
+            <View style={styles.facetSearchContainer}>
+              <TouchableOpacity onPressOut={() => onFacetSearch()}>
+                <OcticonsIcon
+                  // style={styles.searchIcon}
+                  size={16}
+                  name={'search'}
+                />
+              </TouchableOpacity>
+              <TextInput
+                style={styles.searchInput}
+                value={facetSearchValue}
+                onChangeText={setFacetSearchValue}
+              />
+            </View>
+          </View>
+        )}
         <SelectMultiple
           rowStyle={styles.rowStyle}
           labelStyle={styles.checkboxText}
@@ -209,5 +252,28 @@ const styles = StyleSheet.create({
     paddingVertical: 7.5,
     backgroundColor: '#F0F0F0',
     height: 40,
+  },
+  facetSearchRow: {
+    paddingVertical: 7.5,
+    backgroundColor: '#F0F0F0',
+    height: 40,
+    paddingHorizontal: 10,
+    // justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  facetSearchContainer: {
+    borderWidth: 1,
+    flexDirection: 'row',
+    width: 70,
+    borderRadius: 10,
+    alignItems: 'center',
+    paddingHorizontal: 2,
+  },
+  searchInput: {
+    paddingHorizontal: 4,
+    fontFamily: 'Exo2-Regular',
+    fontSize: 12,
+    flex: 1,
+    flexWrap: 'wrap',
   },
 });
