@@ -1504,6 +1504,14 @@
     "@babel/runtime-corejs3" "^7.12.5"
     cross-fetch "^3.1.4"
 
+"@yext/answers-core@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@yext/answers-core/-/answers-core-1.4.0.tgz#e9b5c07ff327c389c69507194e11ff0da205fb23"
+  integrity sha512-+eDe4yk0oqYa9YjbsoPCVIqZH2fP+S/+qoxmB30986Ei89UkCbwj6cBweydTCqAYe9ZRhobrrEp/0zTGqK+i+Q==
+  dependencies:
+    "@babel/runtime-corejs3" "^7.12.5"
+    cross-fetch "^3.1.4"
+
 "@yext/answers-headless-react@^0.4.0-beta.0":
   version "0.4.0-beta.0"
   resolved "https://registry.yarnpkg.com/@yext/answers-headless-react/-/answers-headless-react-0.4.0-beta.0.tgz#393a1f84cf0eeea42ffa044f813b00ce56ef6971"

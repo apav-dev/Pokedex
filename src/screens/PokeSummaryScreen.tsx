@@ -1,12 +1,20 @@
 import { useAnswersState } from '@yext/answers-headless-react';
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Animated,
+  Dimensions,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { BaseStats } from '../components/BaseStatChart';
-import { PokeInfo } from '../components/PokeInfo';
-import { Pokemon } from '../components/Pokemon';
+import { BaseSummary } from '../components/BaseSummary';
+import { CardCarousel } from '../components/CardCarousel';
 import { MainRoutes } from '../routing/routes';
 import { MainNavigationProp, MainRouteProp } from '../routing/types';
+
+const { width, height } = Dimensions.get('window');
 
 type PokeSummaryScreenProps = {
   navigation: MainNavigationProp<MainRoutes.PokeSummary>;
@@ -23,48 +31,19 @@ export const PokeSummaryScreen = ({
     state => state.vertical.results?.verticalResults.results,
   )?.find(result => result.id === pokeId);
 
-  const getPokeStats = () => {
-    if (pokemon) {
-      return {
-        hp: getPokeStat('hp'),
-        attack: getPokeStat('attack'),
-        defense: getPokeStat('defense'),
-        spAttack: getPokeStat('special-attack'),
-        spDefense: getPokeStat('special-defense'),
-        speed: getPokeStat('speed'),
-      };
-    }
-  };
-
-  const getPokeStat = (statName: string) =>
-    pokemon?.rawData.c_stats.find(stat => stat.name === statName).baseStat;
-
   return (
     <SafeAreaView style={styles.container}>
-      <View>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPressOut={() => navigation.navigate('Search')}>
-          <Text style={styles.backButtonText}>{'< Search'}</Text>
-        </TouchableOpacity>
-      </View>
-      <Pokemon
-        id={pokemon?.id as string}
-        name={pokemon?.rawData.name as string}
-        imageUrl={pokemon?.rawData.c_sprites.officialArtwork.sourceUrl}
-      />
-      <PokeInfo
-        genus={pokemon?.rawData.c_genus as string}
-        description={
-          pokemon?.rawData.c_pokedexDescriptions[
-            pokemon?.rawData.c_pokedexDescriptions.length - 1
-          ].description
-        }
-        height={pokemon?.rawData.c_height as number}
-        weight={pokemon?.rawData.c_weight as number}
-        stats={getPokeStats() as BaseStats}
-        types={pokemon?.rawData.c_types}
-      />
+      <ScrollView
+        style={styles.container}
+        snapToAlignment="start"
+        decelerationRate="fast">
+        {[
+          <BaseSummary key={0} pokemon={pokemon} navigation={navigation} />,
+          <View>
+            <CardCarousel key={1} />
+          </View>,
+        ]}
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -72,18 +51,5 @@ export const PokeSummaryScreen = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  pokeImage: {
-    height: 60,
-    width: 60,
-  },
-  backButton: {
-    marginLeft: 12,
-  },
-  backButtonText: {
-    fontFamily: 'Exo2-Regular',
-    fontWeight: '600',
-    fontSize: 16,
-    color: '#006ee6',
   },
 });
