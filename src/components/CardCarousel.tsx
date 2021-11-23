@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { Animated, Dimensions, StyleSheet, View, Image } from 'react-native';
 import { PokeCard } from './PokeCard';
 
@@ -16,7 +17,8 @@ const cards = [
     cardSetName: 'Gym Challenge',
     number: 2,
     printedTotal: 132,
-    versionPricing: [
+    releaseDate: '10/16/2000',
+    versionPrices: [
       {
         version: 'Holofoil',
         pricing: {
@@ -46,8 +48,9 @@ const cards = [
     rarity: 'Rare Holo',
     cardSetName: 'Base',
     number: 4,
-    printedTotal: 132,
-    versionPricing: [
+    printedTotal: 102,
+    releaseDate: '01/09/1999',
+    versionPrices: [
       {
         version: 'Holofoil',
         pricing: {
@@ -68,7 +71,8 @@ const cards = [
     cardSetName: 'Secret Wonders',
     number: 3,
     printedTotal: 132,
-    versionPricing: [
+    releaseDate: '11/01/2007',
+    versionPrices: [
       {
         version: 'Holofoil',
         pricing: {
@@ -104,7 +108,7 @@ export const CardCarousel = () => {
         showsHorizontalScrollIndicator={false}
         scrollEventThrottle={1}
         decelerationRate="fast"
-        snapToInterval={CARD_WIDTH + 20}
+        snapToInterval={CARD_WIDTH + 40}
         snapToAlignment="center"
         contentInset={{
           //for iOS

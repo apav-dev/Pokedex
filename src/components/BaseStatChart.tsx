@@ -1,9 +1,8 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import {
   VictoryArea,
   VictoryChart,
-  VictoryGroup,
   VictoryLabel,
   VictoryPolarAxis,
   VictoryTheme,
@@ -29,9 +28,9 @@ export const BaseStatChart = ({
     <VictoryArea
       style={{
         data: {
-          fill: '#E8E8E8',
-          stroke: '#A9A9A9',
-          color: '#E8E8E8',
+          fill: 'white',
+          stroke: 'black',
+          color: '#A9A9A9',
           strokeWidth: 1,
         },
       }}
@@ -59,7 +58,7 @@ export const BaseStatChart = ({
           stroke: 'transparent',
         },
         grid: {
-          stroke: '#FFFFFF',
+          stroke: '#A9A9A9',
           strokeDasharray: '1',
         },
       }}

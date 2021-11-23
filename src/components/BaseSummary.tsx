@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { MainRoutes } from '../routing/routes';
 import { MainNavigationProp, MainRouteProp } from '../routing/types';
 import { PokeInfo } from './PokeInfo';
@@ -39,13 +33,6 @@ export const BaseSummary = ({
 
   return (
     <View style={styles.container}>
-      <View>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPressOut={() => navigation.navigate('Search')}>
-          <Text style={styles.backButtonText}>{'< Search'}</Text>
-        </TouchableOpacity>
-      </View>
       <Pokemon
         id={pokemon?.id as string}
         name={pokemon?.rawData.name as string}

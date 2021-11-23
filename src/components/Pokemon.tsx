@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: width,
+    backgroundColor: '#E8E8E8',
   },
   pokeImage: {
     height: 200,

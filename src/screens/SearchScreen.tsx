@@ -30,7 +30,7 @@ export const SearchScreen = () => (
 
 const styles = StyleSheet.create({
   statusBar: {
-    backgroundColor: '#DCDCDC',
+    backgroundColor: '#C0C0C0',
   },
   container: {
     flex: 1,

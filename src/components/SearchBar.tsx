@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     zIndex: 1,
-    backgroundColor: '#DCDCDC',
+    backgroundColor: '#C0C0C0',
     justifyContent: 'flex-start',
     shadowOffset: {
       width: 0,

@@ -51,11 +51,13 @@ export const PokeInfo = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.genusContainer}>
-        <Text style={styles.genusText}>{genus}</Text>
-        <Text style={styles.descriptionText}>{description}</Text>
+      <View style={styles.baseInfoContainer}>
+        <View style={styles.genusContainer}>
+          <Text style={styles.genusText}>{genus}</Text>
+          <Text style={styles.descriptionText}>{description}</Text>
+        </View>
+        <DataRow cells={rowOne} />
       </View>
-      <DataRow cells={rowOne} />
       <View style={styles.statChartContainer}>
         <BaseStatChart stats={stats} />
       </View>
@@ -66,13 +68,25 @@ export const PokeInfo = ({
 const styles = StyleSheet.create({
   container: {
     flex: 5,
+    backgroundColor: '#E8E8E8',
     // padding: 10,
     // borderWidth: 1,
   },
+  baseInfoContainer: {
+    backgroundColor: 'white',
+    marginHorizontal: 15,
+    borderRadius: 8,
+    borderWidth: 2,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.7,
+  },
   genusContainer: {
     alignItems: 'center',
-    width: width,
-    marginVertical: 30,
+    marginVertical: 15,
+    marginHorizontal: 40,
   },
   genusText: {
     fontFamily: 'Exo2-Regular',
