@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { MainRoutes } from '../routing/routes';
 import { MainNavigationProp, MainRouteProp } from '../routing/types';
 import { PokeInfo } from './PokeInfo';
 import { Pokemon } from './Pokemon';
 import { Result } from '@yext/answers-core';
+import { BaseStats } from './BaseStatChart';
 
 type BaseSummaryScreenProps = {
   navigation: MainNavigationProp<MainRoutes.PokeSummary>;
-  pokemon: Result | undefined;
+  pokemon: Result;
 };
 
 export const BaseSummary = ({
@@ -28,27 +29,31 @@ export const BaseSummary = ({
     }
   };
 
+  useEffect(() => {
+    console.log(pokemon);
+  }, []);
+
   const getPokeStat = (statName: string) =>
-    pokemon?.rawData.c_stats.find(stat => stat.name === statName).baseStat;
+    pokemon.c_stats.find(stat => stat.name === statName).baseStat;
 
   return (
     <View style={styles.container}>
       <Pokemon
         id={pokemon?.id as string}
-        name={pokemon?.rawData.name as string}
-        imageUrl={pokemon?.rawData.c_sprites.officialArtwork.sourceUrl}
+        name={pokemon?.name as string}
+        imageUrl={pokemon?.c_sprites.officialArtwork.sourceUrl}
       />
       <PokeInfo
-        genus={pokemon?.rawData.c_genus as string}
+        genus={pokemon?.c_genus as string}
         description={
-          pokemon?.rawData.c_pokedexDescriptions[
-            pokemon?.rawData.c_pokedexDescriptions.length - 1
+          pokemon?.c_pokedexDescriptions[
+            pokemon?.c_pokedexDescriptions.length - 1
           ].description
         }
-        height={pokemon?.rawData.c_height as number}
-        weight={pokemon?.rawData.c_weight as number}
+        height={pokemon?.c_height as number}
+        weight={pokemon?.c_weight as number}
         stats={getPokeStats() as BaseStats}
-        types={pokemon?.rawData.c_types}
+        types={pokemon?.c_types}
       />
     </View>
   );

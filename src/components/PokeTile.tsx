@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/core';
+import { useAnswersActions } from '@yext/answers-headless-react';
 import React, { FC, useEffect } from 'react';
 import {
   Image,
@@ -13,16 +14,14 @@ import { formatDexNumber } from '../utils/formatDexNumber';
 
 interface IPokeTileProps extends ViewProps {
   diagonal: number;
-  pokedexNumber: number;
-  pokemonName: string;
-  spriteUrl: string;
+  pokemon: Record<string, unknown>;
+  onPressTile: (value: string) => void;
 }
 
 export const PokeTile: FC<IPokeTileProps> = ({
   diagonal,
-  pokedexNumber,
-  pokemonName,
-  spriteUrl,
+  pokemon,
+  onPressTile,
 }) => {
   const navigation = useNavigation();
 
@@ -38,10 +37,16 @@ export const PokeTile: FC<IPokeTileProps> = ({
     }).start();
   }, []);
 
+  const onTilePressOut = () => {
+    navigation.navigate('PokeSummary', { pokemon: pokemon.rawData });
+    onPressTile(pokemon.rawData.name);
+  };
+
   return (
     <TouchableOpacity
       onPressOut={() =>
-        navigation.navigate('PokeSummary', { pokeId: pokedexNumber })
+        // TODO: Trigger new Answers Query Here
+        onTilePressOut()
       }>
       <Animated.View
         style={[
@@ -53,12 +58,14 @@ export const PokeTile: FC<IPokeTileProps> = ({
         <Image
           style={styles.pokeImage}
           source={{
-            uri: spriteUrl,
+            uri: pokemon.rawData.c_sprites.officialArtwork.sourceUrl,
           }}
         />
         <View style={styles.textContainer}>
-          <Text style={styles.font}>{formatDexNumber(pokedexNumber)}</Text>
-          <Text style={styles.font}>{pokemonName}</Text>
+          <Text style={styles.font}>
+            {formatDexNumber(pokemon.rawData.id as number)}
+          </Text>
+          <Text style={styles.font}>{pokemon.rawData.name as string}</Text>
         </View>
       </Animated.View>
     </TouchableOpacity>

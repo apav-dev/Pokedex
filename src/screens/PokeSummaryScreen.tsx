@@ -1,5 +1,5 @@
 import { useAnswersState } from '@yext/answers-headless-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { BaseSummary } from '../components/BaseSummary';
 import { CardCarousel } from '../components/CardCarousel';
@@ -15,11 +15,7 @@ export const PokeSummaryScreen = ({
   navigation,
   route,
 }: PokeSummaryScreenProps): React.ReactElement => {
-  const { pokeId } = route.params;
-
-  const pokemon = useAnswersState(
-    state => state.vertical.results?.verticalResults.results,
-  )?.find(result => result.id === pokeId);
+  const { pokemon } = route.params;
 
   return (
     <ScrollView

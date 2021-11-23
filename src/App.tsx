@@ -3,11 +3,6 @@ import { AnswersHeadlessProvider } from '@yext/answers-headless-react';
 import MainNavigation from './routing/MainNavigation';
 
 // TODO:
-// filter options at the top
-// when clicking on tile, pull up summary of Pokemon
-// tile press effect
-// search bar press effect
-// loading icon until pictures are all loaded
 // pagination
 
 export type RootStackParamsList = {

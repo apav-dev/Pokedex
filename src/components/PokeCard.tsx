@@ -1,5 +1,12 @@
 import React from 'react';
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { DataRow } from './DataRow';
 
 const win = Dimensions.get('window');
@@ -8,6 +15,7 @@ const CARD_WIDTH = win.width * 0.75;
 
 type PokeCardProps = {
   card: PokeCard;
+  loading: boolean;
 };
 
 type PokeCard = {
@@ -15,9 +23,9 @@ type PokeCard = {
   artist: string;
   rarity: string;
   cardSetName: string;
-  number: number;
+  number: string;
   releaseDate: string;
-  printedTotal: number;
+  printedTotal: string;
   versionPrices: VersionPricing[];
 };
 
@@ -34,37 +42,40 @@ type Pricing = {
   directLow: number;
 };
 
-export const PokeCard = ({ card }: PokeCardProps): React.ReactElement => {
-  const artCells = [
-    {
-      label: 'Artist',
-      value: <Text>{card.artist}</Text>,
-    },
-    {
-      label: 'Rarity',
-      value: <Text>{card.rarity}</Text>,
-    },
-  ];
+export const PokeCard = ({
+  card,
+  loading,
+}: PokeCardProps): React.ReactElement => {
+  // const artCells = [
+  //   {
+  //     label: 'Artist',
+  //     value: <Text>{card.artist}</Text>,
+  //   },
+  //   {
+  //     label: 'Rarity',
+  //     value: <Text>{card.rarity}</Text>,
+  //   },
+  // ];
 
-  const setCells = [
-    {
-      label: 'Set',
-      value: <Text style={styles.valueText}>{card.cardSetName}</Text>,
-    },
-    {
-      label: 'Set No.',
-      value: (
-        <Text
-          style={
-            styles.valueText
-          }>{`${card.number}/${card.printedTotal}`}</Text>
-      ),
-    },
-    {
-      label: 'Release Date',
-      value: <Text style={styles.valueText}>{card.releaseDate}</Text>,
-    },
-  ];
+  // const setCells = [
+  //   {
+  //     label: 'Set',
+  //     value: <Text style={styles.valueText}>{card.cardSetName}</Text>,
+  //   },
+  //   {
+  //     label: 'Set No.',
+  //     value: (
+  //       <Text
+  //         style={
+  //           styles.valueText
+  //         }>{`${card.number}/${card.printedTotal}`}</Text>
+  //     ),
+  //   },
+  //   {
+  //     label: 'Release Date',
+  //     value: <Text style={styles.valueText}>{card.releaseDate}</Text>,
+  //   },
+  // ];
 
   const getPricingCells = (version: string) =>
     Object.entries(
@@ -78,22 +89,30 @@ export const PokeCard = ({ card }: PokeCardProps): React.ReactElement => {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
-        <Image
-          style={styles.cardImage}
-          source={{
-            uri: card.imgSrc,
-          }}
-        />
+        {!loading ? (
+          <Image
+            style={styles.cardImage}
+            source={{
+              uri: card.imgSrc,
+            }}
+          />
+        ) : (
+          <ActivityIndicator style={styles.spinner} size="large" />
+        )}
       </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.titleText}>Card Info</Text>
-        <DataRow cells={setCells} />
-        <DataRow cells={artCells} />
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.titleText}>TCG Pricing</Text>
-        <DataRow cells={getPricingCells('Holofoil')} />
-      </View>
+      {!loading && (
+        <View>
+          {/* <View style={styles.infoContainer}>
+            <Text style={styles.titleText}>Card Info</Text>
+            <DataRow cells={setCells} />
+            <DataRow cells={artCells} />
+          </View> */}
+          {/* <View style={styles.infoContainer}>
+            <Text style={styles.titleText}>TCG Pricing</Text>
+            <DataRow cells={getPricingCells('Holofoil')} />
+          </View> */}
+        </View>
+      )}
     </View>
   );
 };
@@ -125,6 +144,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.7,
     marginBottom: 6,
+    // height: 330,
   },
   //240 x 330
   cardImage: {

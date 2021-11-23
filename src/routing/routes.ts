@@ -7,7 +7,7 @@ export enum MainRoutes {
 
 export type MainStackParamList = {
   [MainRoutes.Search]: undefined;
-  [MainRoutes.PokeSummary]: { pokeId: string };
+  [MainRoutes.PokeSummary]: { pokemon: Record<string, unknown> };
 };
 
 export const MainStack = createNativeStackNavigator<MainStackParamList>();
