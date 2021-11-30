@@ -1,7 +1,4 @@
-import {
-  useAnswersActions,
-  useAnswersState,
-} from '@yext/answers-headless-react';
+import { useAnswersState } from '@yext/answers-headless-react';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { FilterTab } from './FilterTab';

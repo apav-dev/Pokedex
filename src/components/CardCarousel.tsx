@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { Animated, Dimensions, StyleSheet, View, Image } from 'react-native';
+import { Animated, Dimensions, View } from 'react-native';
 import { PokeCard } from './PokeCard';
 import { useAnswersState } from '@yext/answers-headless-react';
 
@@ -105,7 +104,6 @@ export const CardCarousel = () => {
   const verticalKey = useAnswersState(state => state.vertical.key);
   const cards = useAnswersState(state =>
     state.vertical.results?.verticalResults.results.map(result => {
-      console.log(result);
       return {
         imgSrc: result.rawData.c_smallImage?.sourceUrl,
         artist: result.rawData.c_artist || 'N/A',
@@ -113,7 +111,7 @@ export const CardCarousel = () => {
         cardSetName: result.rawData.c_cardSet?.name || 'N/A',
         number: result.rawData.c_number,
         printedTotal: result.rawData.c_cardSet?.printedTotal || 'N/A',
-        releaseDate: result.rawData.releaseDate,
+        releaseDate: result.rawData.c_cardSet?.releaseDate,
       };
     }),
   );

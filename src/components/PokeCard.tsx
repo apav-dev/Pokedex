@@ -46,45 +46,14 @@ export const PokeCard = ({
   card,
   loading,
 }: PokeCardProps): React.ReactElement => {
-  // const artCells = [
-  //   {
-  //     label: 'Artist',
-  //     value: <Text>{card.artist}</Text>,
-  //   },
-  //   {
-  //     label: 'Rarity',
-  //     value: <Text>{card.rarity}</Text>,
-  //   },
-  // ];
-
-  // const setCells = [
-  //   {
-  //     label: 'Set',
-  //     value: <Text style={styles.valueText}>{card.cardSetName}</Text>,
-  //   },
-  //   {
-  //     label: 'Set No.',
-  //     value: (
-  //       <Text
-  //         style={
-  //           styles.valueText
-  //         }>{`${card.number}/${card.printedTotal}`}</Text>
-  //     ),
-  //   },
-  //   {
-  //     label: 'Release Date',
-  //     value: <Text style={styles.valueText}>{card.releaseDate}</Text>,
-  //   },
-  // ];
-
-  const getPricingCells = (version: string) =>
-    Object.entries(
-      card.versionPrices.find(versionPrice => versionPrice.version === version)
-        ?.pricing,
-    ).map(entry => ({
-      label: entry[0],
-      value: <Text style={styles.valueText}>{entry[1]}</Text>,
-    }));
+  // const getPricingCells = (version: string) =>
+  //   Object.entries(
+  //     card.versionPrices.find(versionPrice => versionPrice.version === version)
+  //       ?.pricing,
+  //   ).map(entry => ({
+  //     label: entry[0],
+  //     value: <Text style={styles.valueText}>{entry[1]}</Text>,
+  //   }));
 
   return (
     <View style={styles.cardContainer}>
@@ -97,16 +66,51 @@ export const PokeCard = ({
             }}
           />
         ) : (
-          <ActivityIndicator style={styles.spinner} size="large" />
+          <ActivityIndicator size="large" />
         )}
       </View>
       {!loading && (
         <View>
-          {/* <View style={styles.infoContainer}>
+          <View style={styles.infoContainer}>
             <Text style={styles.titleText}>Card Info</Text>
-            <DataRow cells={setCells} />
-            <DataRow cells={artCells} />
-          </View> */}
+            <DataRow
+              cells={[
+                {
+                  label: 'Set',
+                  value: (
+                    <Text style={styles.valueText}>{card.cardSetName}</Text>
+                  ),
+                },
+                {
+                  label: 'Set No.',
+                  value: (
+                    <Text
+                      style={
+                        styles.valueText
+                      }>{`${card.number}/${card.printedTotal}`}</Text>
+                  ),
+                },
+                {
+                  label: 'Release Date',
+                  value: (
+                    <Text style={styles.valueText}>{card.releaseDate}</Text>
+                  ),
+                },
+              ]}
+            />
+            <DataRow
+              cells={[
+                {
+                  label: 'Artist',
+                  value: <Text>{card.artist}</Text>,
+                },
+                {
+                  label: 'Rarity',
+                  value: <Text>{card.rarity}</Text>,
+                },
+              ]}
+            />
+          </View>
           {/* <View style={styles.infoContainer}>
             <Text style={styles.titleText}>TCG Pricing</Text>
             <DataRow cells={getPricingCells('Holofoil')} />
@@ -161,5 +165,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Exo2-Regular',
     fontWeight: '400',
     fontSize: 14,
+    maxWidth: 75,
   },
 });
