@@ -18,8 +18,8 @@ export const AppliedFilters = (): React.ReactElement => {
 
   return (
     <View style={styles.container}>
-      {appliedFilters?.map(filter => (
-        <FilterTab tabName={filter.displayValue} />
+      {appliedFilters?.map((filter, i) => (
+        <FilterTab key={i} tabName={filter.displayValue} />
       ))}
     </View>
   );
