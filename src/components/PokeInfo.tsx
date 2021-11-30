@@ -34,19 +34,19 @@ export const PokeInfo = ({
       label: 'Height',
       value: getPlainValueText(heightFromDecimeters(height)),
     },
-    // {
-    //   label: 'Weight',
-    //   value: getPlainValueText(weightFromHectograms(weight)),
-    // },
-    // {
-    //   label: 'Types',
-    //   value:
-    //     types.length === 1
-    //       ? getPlainValueText(toProperCase(types[0].name))
-    //       : getPlainValueText(
-    //           `${toProperCase(types[0].name)}, ${toProperCase(types[1].name)}`,
-    //         ),
-    // },
+    {
+      label: 'Weight',
+      value: getPlainValueText(weightFromHectograms(weight)),
+    },
+    {
+      label: 'Types',
+      value:
+        types.length === 1
+          ? getPlainValueText(toProperCase(types[0].name))
+          : getPlainValueText(
+              `${toProperCase(types[0].name)}, ${toProperCase(types[1].name)}`,
+            ),
+    },
   ];
 
   return (

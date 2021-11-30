@@ -21,6 +21,7 @@ export const PokeSearchResults: FC<IPokeSearchResultsProps> = () => {
   const pokemon = useAnswersState(
     state => state.vertical.results?.verticalResults.results,
   );
+  const verticalKey = useAnswersState(state => state.vertical.key);
   const searchLoading = useAnswersState(state => state.vertical.searchLoading);
   const answersActions = useAnswersActions();
 
@@ -51,7 +52,7 @@ export const PokeSearchResults: FC<IPokeSearchResultsProps> = () => {
       snapToInterval={116}
       // onScroll={e => handleOnScroll(e)}
       snapToAlignment="start">
-      {!searchLoading && pokemon && !inSummary ? (
+      {!searchLoading && verticalKey === 'pokémon' && pokemon ? (
         pokemon.map((p, i) => (
           <PokeTile
             key={i}
