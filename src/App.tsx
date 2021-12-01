@@ -1,6 +1,7 @@
 import React from 'react';
 import { AnswersHeadlessProvider } from '@yext/answers-headless-react';
 import MainNavigation from './routing/MainNavigation';
+import { FlatList } from 'react-native';
 
 // TODO:
 // pagination
@@ -41,3 +42,9 @@ const App = () => {
 };
 
 export default App;
+
+const fetchTodos = dispatch => {
+  client.get('todos').then(todos => {
+    dispatch({ type: 'TODOS_FETCHED', payload: todos });
+  });
+};

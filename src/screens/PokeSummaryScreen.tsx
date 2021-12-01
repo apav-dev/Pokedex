@@ -1,9 +1,7 @@
+import { useAnswersActions } from '@yext/answers-headless-react';
+import React from 'react';
 import {
-  useAnswersActions,
-  useAnswersState,
-} from '@yext/answers-headless-react';
-import React, { useEffect } from 'react';
-import {
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,7 +10,6 @@ import {
 } from 'react-native';
 import { BaseSummary } from '../components/BaseSummary';
 import { CardCarousel } from '../components/CardCarousel';
-import { PokeCard } from '../components/PokeCard';
 import { MainRoutes } from '../routing/routes';
 import { MainNavigationProp, MainRouteProp } from '../routing/types';
 import AntIcon from 'react-native-vector-icons/AntDesign';
@@ -33,24 +30,9 @@ export const PokeSummaryScreen = ({
   navigation.setOptions({
     headerLeft: () => (
       <TouchableOpacity onPressOut={onSearchButtonPress}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-
-            // padding: 8,
-          }}>
+        <View style={styles.leftIcon}>
           <AntIcon name={'left'} color={'#147EFB'} />
-          <Text
-            style={{
-              fontSize: 16,
-              fontFamily: 'Exo2-Regular',
-              paddingLeft: 4,
-              color: '#147EFB',
-            }}>
-            Search
-          </Text>
+          <Text style={styles.searchButtonText}>Search</Text>
         </View>
       </TouchableOpacity>
     ),
@@ -59,28 +41,41 @@ export const PokeSummaryScreen = ({
   const onSearchButtonPress = () => {
     answersActions.setVerticalKey('pokémon');
     answersActions.setQuery('');
-    answersActions.resetFacets('');
+    answersActions.resetFacets();
     answersActions.executeVerticalQuery();
     navigation.navigate('Search');
   };
 
   return (
-    <ScrollView
-      style={styles.container}
-      snapToAlignment="start"
-      decelerationRate="fast">
-      {[
-        <BaseSummary key={0} pokemon={pokemon} navigation={navigation} />,
-        <View>
-          <CardCarousel key={1} />
-        </View>,
-      ]}
-    </ScrollView>
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        snapToAlignment="start"
+        decelerationRate="fast">
+        {[
+          <BaseSummary key={0} pokemon={pokemon} navigation={navigation} />,
+          <View>
+            <CardCarousel key={1} />
+          </View>,
+        ]}
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  leftIcon: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  searchButtonText: {
+    fontSize: 16,
+    fontFamily: 'Exo2-Regular',
+    paddingLeft: 4,
+    color: '#147EFB',
   },
 });

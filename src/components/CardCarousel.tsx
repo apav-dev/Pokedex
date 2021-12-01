@@ -6,7 +6,7 @@ import { useAnswersState } from '@yext/answers-headless-react';
 const win = Dimensions.get('window');
 
 const CARD_WIDTH = win.width * 0.75;
-const SPACING_FOR_CARD_INSET: number = win.width * 0.1 - 20;
+const SPACING_FOR_CARD_INSET: number = win.width * 0.1 - 10;
 
 // const cards = [
 //   {
@@ -125,7 +125,7 @@ export const CardCarousel = () => {
           showsHorizontalScrollIndicator={false}
           scrollEventThrottle={1}
           decelerationRate="fast"
-          snapToInterval={CARD_WIDTH + 40}
+          snapToInterval={CARD_WIDTH + 45}
           snapToAlignment="center"
           contentInset={{
             //for iOS
