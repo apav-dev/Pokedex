@@ -18,7 +18,7 @@ type PokeCardProps = {
   loading: boolean;
 };
 
-type PokeCard = {
+export type PokeCard = {
   imgSrc: string;
   artist: string;
   rarity: string;
@@ -26,12 +26,11 @@ type PokeCard = {
   number: string;
   releaseDate: string;
   printedTotal: string;
-  versionPrices: VersionPricing[];
-};
-
-type VersionPricing = {
-  version: string;
-  pricing: Pricing;
+  normalPricing?: Pricing;
+  holofoilPricing?: Pricing;
+  reverseHolofoilPricing?: Pricing;
+  firstEditionHolofoilPricing?: Pricing;
+  firstEditionNormalPricing?: Pricing;
 };
 
 type Pricing = {
