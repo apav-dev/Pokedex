@@ -1,8 +1,8 @@
 import {
-  // useAnswersActions,
+  useAnswersActions,
   useAnswersState,
 } from '@yext/answers-headless-react';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import {
   ViewProps,
   StyleSheet,
@@ -17,10 +17,13 @@ interface IPokeSearchResultsProps extends ViewProps {}
 
 export const PokeSearchResults: FC<IPokeSearchResultsProps> = () => {
   // const answersActions = useAnswersActions();
+  const [inSummary, setInSummary] = useState(false);
   const pokemon = useAnswersState(
     state => state.vertical.results?.verticalResults.results,
   );
+  const verticalKey = useAnswersState(state => state.vertical.key);
   const searchLoading = useAnswersState(state => state.vertical.searchLoading);
+  const answersActions = useAnswersActions();
 
   // const rows = pokemon ? Math.floor(pokemon?.length / 3) : 0;
   // const halfwayPoint = (116 * rows) / 2;
@@ -34,6 +37,13 @@ export const PokeSearchResults: FC<IPokeSearchResultsProps> = () => {
   //   }
   // };
 
+  const onNavigateFromTile = (pokemonName: string) => {
+    answersActions.setVerticalKey('pokemon_card');
+    answersActions.setQuery(pokemonName);
+    answersActions.executeVerticalQuery();
+    setInSummary(true);
+  };
+
   return (
     <Animated.ScrollView
       style={styles.container}
@@ -42,14 +52,16 @@ export const PokeSearchResults: FC<IPokeSearchResultsProps> = () => {
       snapToInterval={116}
       // onScroll={e => handleOnScroll(e)}
       snapToAlignment="start">
-      {!searchLoading && pokemon ? (
+      {!searchLoading && verticalKey === 'pokémon' && pokemon ? (
         pokemon.map((p, i) => (
           <PokeTile
             key={i}
             diagonal={Math.floor(i / 3) + (i % 3)}
-            pokemonName={p.rawData.name as string}
-            pokedexNumber={p.rawData.id as number}
-            spriteUrl={p.rawData.c_sprites.officialArtwork.sourceUrl as string}
+            // pokemonName={p.rawData.name as string}
+            // pokedexNumber={p.rawData.id as number}
+            // spriteUrl={p.rawData.c_sprites.officialArtwork.sourceUrl as string}
+            pokemon={p}
+            onPressTile={onNavigateFromTile}
           />
         ))
       ) : (

@@ -1,13 +1,9 @@
 import React from 'react';
 import { AnswersHeadlessProvider } from '@yext/answers-headless-react';
 import MainNavigation from './routing/MainNavigation';
+import { FlatList } from 'react-native';
 
 // TODO:
-// filter options at the top
-// when clicking on tile, pull up summary of Pokemon
-// tile press effect
-// search bar press effect
-// loading icon until pictures are all loaded
 // pagination
 
 export type RootStackParamsList = {
@@ -46,3 +42,9 @@ const App = () => {
 };
 
 export default App;
+
+const fetchTodos = dispatch => {
+  client.get('todos').then(todos => {
+    dispatch({ type: 'TODOS_FETCHED', payload: todos });
+  });
+};
