@@ -1,11 +1,9 @@
 import React from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
-
-const { width, height } = Dimensions.get('window');
+import { StyleSheet, Text, View } from 'react-native';
 
 export type DataCell = {
   label: string;
-  value: React.ReactChild;
+  value?: React.ReactChild;
 };
 
 type DataRowProps = {
