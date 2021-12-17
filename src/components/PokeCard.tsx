@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -7,7 +7,8 @@ import {
   Text,
   View,
 } from 'react-native';
-import { DataRow } from './DataRow';
+import { formatPrice } from '../utils/formatPrice';
+import { DataCell, DataRow } from './DataRow';
 
 const win = Dimensions.get('window');
 
@@ -45,14 +46,57 @@ export const PokeCard = ({
   card,
   loading,
 }: PokeCardProps): React.ReactElement => {
-  // const getPricingCells = (version: string) =>
-  //   Object.entries(
-  //     card.versionPrices.find(versionPrice => versionPrice.version === version)
-  //       ?.pricing,
-  //   ).map(entry => ({
-  //     label: entry[0],
-  //     value: <Text style={styles.valueText}>{entry[1]}</Text>,
-  //   }));
+  const [selectedPricing, setSelectedPricing] = useState('normalPricing');
+
+  const getPricingCells = (): DataCell[] => {
+    const pricingTypes = [];
+    card.normalPricing && pricingTypes.push('Normal');
+    card.holofoilPricing && pricingTypes.push('Holofoil');
+    card.reverseHolofoilPricing && pricingTypes.push('Reverse Holofoil');
+    card.firstEditionNormalPricing && pricingTypes.push('First Edition Normal');
+    card.reverseHolofoilPricing && pricingTypes.push('Reverse Holofoil');
+
+    return [
+      {
+        label: 'Low',
+        value: (
+          <Text style={styles.valueText}>
+            {formatPrice(card.normalPricing.low)}
+          </Text>
+        ),
+      },
+      {
+        label: 'Mid',
+        value: (
+          <Text style={styles.valueText}>
+            {formatPrice(card.normalPricing.mid)}
+          </Text>
+        ),
+      },
+      {
+        label: 'High',
+        value: (
+          <Text style={styles.valueText}>
+            {formatPrice(card.normalPricing.high)}
+          </Text>
+        ),
+      },
+      {
+        label: 'Market',
+        value: (
+          <Text style={styles.valueText}>
+            {formatPrice(card.normalPricing.market)}
+          </Text>
+        ),
+      },
+      {
+        label: 'Direct Low',
+        value: (
+          <Text style={styles.valueText}>{card.normalPricing.directLow}</Text>
+        ),
+      },
+    ];
+  };
 
   return (
     <View style={styles.cardContainer}>
@@ -110,10 +154,12 @@ export const PokeCard = ({
               ]}
             />
           </View>
-          {/* <View style={styles.infoContainer}>
-            <Text style={styles.titleText}>TCG Pricing</Text>
-            <DataRow cells={getPricingCells('Holofoil')} />
-          </View> */}
+          {card.normalPricing && (
+            <View style={styles.infoContainer}>
+              <Text style={styles.titleText}>TCG Pricing</Text>
+              <DataRow cells={getPricingCells()} />
+            </View>
+          )}
         </View>
       )}
     </View>
