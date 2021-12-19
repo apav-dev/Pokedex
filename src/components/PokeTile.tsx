@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/core';
-import { useAnswersActions } from '@yext/answers-headless-react';
 import React, { FC, useEffect } from 'react';
 import {
   Image,
@@ -10,6 +9,7 @@ import {
   Animated,
   TouchableOpacity,
 } from 'react-native';
+import { Colors, Typography } from '../styles';
 import { formatDexNumber } from '../utils/formatDexNumber';
 
 interface IPokeTileProps extends ViewProps {
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   tile: {
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#E8E8E8',
+    backgroundColor: Colors.lightSilver,
     borderRadius: 10,
     height: 96,
     width: 96,
@@ -94,8 +94,7 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   font: {
-    fontFamily: 'Exo2-Regular',
-    fontWeight: '600',
+    ...Typography.titleFont,
   },
   pokeImage: {
     width: 60,

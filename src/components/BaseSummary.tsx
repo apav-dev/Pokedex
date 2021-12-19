@@ -6,6 +6,7 @@ import { PokeInfo } from './PokeInfo';
 import { Pokemon } from './Pokemon';
 import { Result } from '@yext/answers-core';
 import { BaseStats } from './BaseStatChart';
+import { Typography } from '../styles';
 
 type BaseSummaryScreenProps = {
   navigation: MainNavigationProp<MainRoutes.PokeSummary>;
@@ -67,8 +68,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   backButtonText: {
-    fontFamily: 'Exo2-Regular',
-    fontWeight: '600',
+    ...Typography.titleFont,
     fontSize: 16,
     color: '#006ee6',
   },

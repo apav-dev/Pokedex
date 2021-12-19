@@ -15,6 +15,7 @@ import {
   useAnswersState,
 } from '@yext/answers-headless-react';
 import { Matcher } from '@yext/answers-core';
+import { Colors, Typography } from '../styles';
 
 const { width, height } = Dimensions.get('window');
 
@@ -178,7 +179,7 @@ export const FacetDrawer: FC<IFacetDrawerProps> = ({
 
 const styles = StyleSheet.create({
   filterContainer: {
-    backgroundColor: '#F0F0F0',
+    backgroundColor: Colors.offWhite,
     width: width * 0.235,
     marginRight: 10,
     alignItems: 'center',
@@ -190,8 +191,7 @@ const styles = StyleSheet.create({
     padding: 6,
   },
   font: {
-    fontFamily: 'Exo2-Regular',
-    fontWeight: '400',
+    ...Typography.bodyFont,
     fontSize: 12,
     marginRight: 8,
   },
@@ -201,13 +201,12 @@ const styles = StyleSheet.create({
     width: width * 0.235,
   },
   checkboxText: {
-    fontFamily: 'Exo2-Regular',
-    fontWeight: '400',
+    ...Typography.bodyFont,
     fontSize: 12,
   },
   rowStyle: {
     paddingVertical: 7.5,
-    backgroundColor: '#F0F0F0',
+    backgroundColor: Colors.offWhite,
     height: 40,
   },
 });

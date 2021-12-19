@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { DataRow } from './DataRow';
 import { CardPricing } from './CardPricing';
+import { Colors, Typography } from '../styles';
 
 const win = Dimensions.get('window');
 
@@ -108,14 +109,14 @@ export const PokeCard = ({
 
 const styles = StyleSheet.create({
   cardContainer: {
-    backgroundColor: '#C0C0C0',
+    backgroundColor: Colors.silver,
     padding: 12,
     marginHorizontal: 10,
     borderRadius: 8,
   },
   infoContainer: {
     marginVertical: 6,
-    backgroundColor: '#E8E8E8',
+    backgroundColor: Colors.lightSilver,
     borderRadius: 8,
     shadowOffset: {
       width: 2,
@@ -141,14 +142,12 @@ const styles = StyleSheet.create({
     height: 330 * (CARD_WIDTH / 240),
   },
   titleText: {
-    fontFamily: 'Exo2-Regular',
-    fontWeight: '600',
+    ...Typography.titleFont,
     fontSize: 18,
     alignSelf: 'center',
   },
   valueText: {
-    fontFamily: 'Exo2-Regular',
-    fontWeight: '400',
+    ...Typography.bodyFont,
     fontSize: 14,
     maxWidth: 75,
   },

@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Colors, Typography } from '../styles';
 
 type FilterTabProps = {
   tabName: string;
@@ -21,7 +22,7 @@ export const FilterTab = ({
 
 const styles = StyleSheet.create({
   filterTab: {
-    backgroundColor: '#F0F0F0',
+    backgroundColor: Colors.offWhite,
     alignSelf: 'flex-start',
     padding: 6,
     borderRadius: 8,
@@ -33,8 +34,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
   },
   filterTabText: {
-    fontFamily: 'Exo2-Regular',
-    fontWeight: '400',
+    ...Typography.bodyFont,
     fontSize: 12,
     paddingRight: 2,
   },

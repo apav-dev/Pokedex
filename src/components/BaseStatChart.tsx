@@ -7,6 +7,7 @@ import {
   VictoryPolarAxis,
   VictoryTheme,
 } from 'victory-native';
+import { Colors, Typography } from '../styles';
 
 export type BaseStats = {
   hp: number;
@@ -30,7 +31,7 @@ export const BaseStatChart = ({
         data: {
           fill: 'white',
           stroke: 'black',
-          color: '#A9A9A9',
+          color: Colors.darkGrey,
           strokeWidth: 1,
         },
       }}
@@ -58,7 +59,7 @@ export const BaseStatChart = ({
           stroke: 'transparent',
         },
         grid: {
-          stroke: '#A9A9A9',
+          stroke: Colors.darkGrey,
           strokeDasharray: '1',
         },
       }}
@@ -84,6 +85,6 @@ export const BaseStatChart = ({
 
 const styles = StyleSheet.create({
   font: {
-    fontFamily: 'Exo2-Regular',
+    ...Typography.fontFamily,
   },
 });

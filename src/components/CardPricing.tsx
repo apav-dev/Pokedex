@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Colors, Typography } from '../styles';
 import { formatPrice } from '../utils/formatPrice';
 import { DataCell, DataRow } from './DataRow';
 import { PokeCard, Pricing } from './PokeCard';
@@ -91,7 +92,7 @@ export const CardPricing = ({ card }: CardPricingProps): React.ReactElement => {
 const styles = StyleSheet.create({
   infoContainer: {
     marginVertical: 6,
-    backgroundColor: '#E8E8E8',
+    backgroundColor: Colors.lightSilver,
     borderRadius: 8,
     shadowOffset: {
       width: 2,
@@ -100,13 +101,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.7,
   },
   titleText: {
-    fontFamily: 'Exo2-Regular',
-    fontWeight: '600',
+    ...Typography.titleFont,
     fontSize: 18,
     alignSelf: 'center',
   },
   filterTab: {
-    backgroundColor: '#C0C0C0',
+    backgroundColor: Colors.silver,
     alignSelf: 'flex-start',
     padding: 2,
     borderRadius: 8,
@@ -114,14 +114,12 @@ const styles = StyleSheet.create({
     width: 80,
   },
   valueText: {
-    fontFamily: 'Exo2-Regular',
-    fontWeight: '400',
+    ...Typography.bodyFont,
     fontSize: 14,
     maxWidth: 75,
   },
   buttonText: {
-    fontFamily: 'Exo2-Regular',
-    fontWeight: '400',
+    ...Typography.bodyFont,
     flexWrap: 'wrap',
     textAlign: 'center',
   },

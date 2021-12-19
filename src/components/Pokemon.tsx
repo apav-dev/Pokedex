@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
 } from 'react-native';
+import { Colors, Typography } from '../styles';
 import { formatDexNumber } from '../utils/formatDexNumber';
 
 type PokemonProps = {
@@ -34,15 +35,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: width,
-    backgroundColor: '#E8E8E8',
+    backgroundColor: Colors.lightSilver,
   },
   pokeImage: {
     height: 200,
     width: 200,
   },
   pokeTitle: {
-    fontFamily: 'Exo2-Regular',
-    fontWeight: '600',
+    ...Typography.titleFont,
     fontSize: 39,
   },
 });

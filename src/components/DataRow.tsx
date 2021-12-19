@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Typography } from '../styles';
 
 export type DataCell = {
   label: string;
@@ -34,7 +35,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   label: {
-    fontFamily: 'Exo2-Regular',
-    fontWeight: '600',
+    ...Typography.titleFont,
   },
 });

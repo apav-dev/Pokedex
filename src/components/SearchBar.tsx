@@ -21,6 +21,7 @@ import { sortRomans } from '../utils/sortRomans';
 import { toProperCase } from '../utils/toProperCase';
 import { AppliedFilters } from './AppliedFilters';
 import { FacetDrawer } from './FacetDrawer';
+import { Colors, Typography } from '../styles';
 
 const { width, height } = Dimensions.get('window');
 
@@ -55,7 +56,7 @@ export const SearchBar: FC<ISearchBarProps> = () => {
   const renderAutoCompleteRow = (item: string) => (
     <Pressable
       style={({ pressed }) => [
-        { backgroundColor: pressed ? '#A9A9A9' : '#F0F0F0' },
+        { backgroundColor: pressed ? Colors.darkGrey : Colors.offWhite },
         styles.rowTextContainer,
       ]}
       onPressOut={() => onRowPressOut(item)}>
@@ -128,14 +129,13 @@ export const SearchBar: FC<ISearchBarProps> = () => {
 // TODO: adjust styling for different phone screens
 const styles = StyleSheet.create({
   font: {
-    fontFamily: 'Exo2-Regular',
-    fontWeight: '600',
+    ...Typography.titleFont,
   },
   rowTextContainer: {
     marginHorizontal: 20,
     paddingVertical: 10,
     borderTopWidth: 1,
-    borderTopColor: '#C0C0C0',
+    borderTopColor: Colors.silver,
   },
   searchInputContainer: {
     flexDirection: 'row',
@@ -143,18 +143,17 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     flexDirection: 'row',
-    backgroundColor: '#F0F0F0',
+    backgroundColor: Colors.offWhite,
     height: 40,
     marginHorizontal: 18,
     borderRadius: 10,
     paddingLeft: 3,
-    fontFamily: 'Exo2-Regular',
-    fontWeight: '600',
     alignItems: 'center',
+    ...Typography.titleFont,
   },
   searchContainer: {
     zIndex: 1,
-    backgroundColor: '#C0C0C0',
+    backgroundColor: Colors.silver,
     justifyContent: 'flex-start',
     shadowOffset: {
       width: 0,

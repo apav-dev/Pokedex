@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Colors, Typography } from '../styles';
 import { heightFromDecimeters } from '../utils/heightFromDecimeters';
 import { toProperCase } from '../utils/toProperCase';
 import { weightFromHectograms } from '../utils/weightFromHectograms';
@@ -68,7 +69,7 @@ export const PokeInfo = ({
 const styles = StyleSheet.create({
   container: {
     flex: 5,
-    backgroundColor: '#E8E8E8',
+    backgroundColor: Colors.lightSilver,
     // padding: 10,
     // borderWidth: 1,
   },
@@ -89,18 +90,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
   },
   genusText: {
-    fontFamily: 'Exo2-Regular',
-    fontWeight: '600',
+    ...Typography.titleFont,
     fontSize: 24,
   },
   statText: {
-    fontFamily: 'Exo2-Regular',
-    fontWeight: '400',
+    ...Typography.bodyFont,
     fontSize: 14,
   },
   descriptionText: {
-    fontFamily: 'Exo2-Regular',
-    fontWeight: '400',
+    ...Typography.bodyFont,
     fontSize: 14,
     textAlign: 'center',
   },
